@@ -61,6 +61,11 @@ int main() {
 }
 
 
+cd documens
+gcc revisao2.c -o revisao2.exe
+revisao2.exe
+
+
 //LISTA DE EXERCÍCIOS DE REVISÃO
 
 Dado os programas criados em laboratório, com uso de menu e vetor, crie as seguintes melhorias:
