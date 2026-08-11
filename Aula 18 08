@@ -1,0 +1,113 @@
+//criação de um estacionamento em c++//
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+#include "meusTipos.h"
+//typedef struct {
+    string placa;
+    string cor;
+    string horaEntrada;//
+} Veiculo;
+
+int main() {
+    vector<Veiculo> garagem; // Esse veiculo a gente criou uma biblioteca separada acima (#include "meusTipos.h")//
+    int opcao;
+    string placa, cor, horaEntrada;
+    
+    do {
+        cout << "\n--- MENU DE OPCOES ---\n";
+        cout << "1 - Adicionar veiculo\n";
+        cout << "2 - Listar veiculos\n";
+        cout << "3 - Saida veiculo\n";
+        cout << "0 - Sair\n";
+        cout << "Escolha uma opcao: ";
+        
+        cin >> opcao;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpa o buffer de entrada
+
+        switch (opcao) {
+            case 1:
+                cout << "Digite a placa do veiculo: ";
+                getline(cin, placa);
+                cout << "Digite a cor do veiculo: ";
+                getline(cin, cor);
+                cout << "Digite a hora de entrada do veiculo: [hh:mm] ";
+                getline(cin, horaEntrada);    
+
+                // Passamos "" (vazio) para horaSaida, pois ele acabou de entrar
+                garagem.push_back({placa, cor, horaEntrada, ""});
+                cout << "Veiculo adicionado com sucesso!\n";
+                break;
+                
+            case 2:
+                if (garagem.empty()) {
+                    cout << "A garagem esta vazia.\n";
+                } else {
+                    cout << "\n--- VEICULOS NA GARAGEM ---\n";
+                    for (int i = 0; i < garagem.size(); i++) {
+                        cout << "Placa: " << garagem[i].placa 
+                             << " | Cor: " << garagem[i].cor 
+                             << " | Entrada: " << garagem[i].horaEntrada << endl;
+                    }
+                }
+                break;
+                
+            case 3: {
+                if (garagem.empty()) {
+                    cout << "A garagem esta vazia. Nao ha veiculos para sair.\n";
+                    break;
+                }
+
+                string placaBusca, horaSaidaDigitada;
+                bool veiculoEncontrado = false;
+
+                cout << "Digite a placa do veiculo que esta saindo: ";
+                getline(cin, placaBusca);
+
+                // Procura o veículo no vector usando um for simples
+                for (int i = 0; i < garagem.size(); i++) {
+                    if (garagem[i].placa == placaBusca) {
+                        veiculoEncontrado = true;
+                        
+                        cout << "Veiculo encontrado! Cor: " << garagem[i].cor << endl;
+                        cout << "Hora de entrada foi: " << garagem[i].horaEntrada << endl;
+                        
+                        cout << "Digite a hora de saida: ";
+                        getline(cin, horaSaidaDigitada);
+
+                        // Não fazemos contas avançadas, apenas mostramos o registro na tela
+                        cout << "\n--- REGISTRO DE SAIDA ---" << endl;
+                        cout << "Placa: " << garagem[i].placa << endl;
+                        cout << "Entrou as: " << garagem[i].horaEntrada << endl;
+                        cout << "Saiu as: " << horaSaidaDigitada << endl;
+                        
+                        // Remove o veículo do vector (isso provavelmente o professor já ensinou junto com o push_back)
+                        garagem.erase(garagem.begin() + i);
+                        cout << "Veiculo removido da garagem com sucesso!\n";
+                        
+                        break; // Para o laco for, pois ja achou e apagou
+                    }
+                }
+
+                if (!veiculoEncontrado) {
+                    cout << "Veiculo com a placa '" << placaBusca << "' nao foi encontrado na garagem.\n";
+                }
+                
+                break;
+            }
+                
+            case 0:
+                cout << "Saindo do programa...\n";
+                break;
+                
+            default:
+                cout << "Opcao invalida. Tente novamente.\n";
+        }
+
+    } while (opcao != 0);
+    
+    return 0; 
+}
