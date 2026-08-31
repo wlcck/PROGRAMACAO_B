@@ -1,4 +1,4 @@
-Exercícios de fixação combinando funções com uso de arquivo texto
+**Exercícios de fixação combinando funções com uso de arquivo texto**
  **1) Criar um programa que tenha uma função que receba uma frase e retorne a quantidade de vogais;**
  #include <iostream>
 #include <string>
