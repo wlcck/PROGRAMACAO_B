@@ -1,0 +1,77 @@
+2. Controle de Estoque de Mercado
+    Contexto: Um minimercado quer controlar a quantidade de produtos.
+    
+    * Struct: Produto (Código, Quantidade, Preco).
+    * Menu:
+        1. Cadastrar produto.
+        2. Exibir o valor total investido no estoque (soma de Quantidade * Preço de todos os itens).
+        3. Sair.
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+const int MAX_PRODUTOS = 100;
+
+struct Produto {
+    int codigo;
+    int quantidade;
+    float preco;
+};
+
+int main() {
+    Produto estoque[MAX_PRODUTOS];
+    int totalProdutos = 0;
+    int opcao = 0;
+
+    do {
+        cout << "\n--- CONTROLE DE ESTOQUE ---\n";
+        cout << "1. Cadastrar produto\n";
+        cout << "2. Exibir valor total investido no estoque\n";
+        cout << "3. Sair\n";
+        cout << "Escolha uma opcao: ";
+        cin >> opcao;
+
+        if (opcao == 1) {
+            if (totalProdutos < MAX_PRODUTOS) {
+                cout << "\nDigite o codigo do produto: ";
+                cin >> estoque[totalProdutos].codigo;
+
+                cout << "Digite a quantidade em estoque: ";
+                cin >> estoque[totalProdutos].quantidade;
+
+                cout << "Digite o preco unitario (R$): ";
+                cin >> estoque[totalProdutos].preco;
+
+                totalProdutos = totalProdutos + 1;
+                cout << "Produto cadastrado com sucesso!\n";
+            } else {
+                cout << "Estoque cheio! Nao e possivel cadastrar mais produtos.\n";
+            }
+        } 
+        else if (opcao == 2) {
+            if (totalProdutos == 0) {
+                cout << "\nNenhum produto cadastrado no estoque.\n";
+            } else {
+                float valorTotal = 0;
+
+                for (int i = 0; i < totalProdutos; i = i + 1) {
+                    valorTotal = valorTotal + (estoque[i].quantidade * estoque[i].preco);
+                }
+
+                cout << "\nValor total investido no estoque: R$ " << valorTotal << endl;
+            }
+        } 
+        else if (opcao == 3) {
+            cout << "\nEncerrando o programa...\n";
+        } 
+        else {
+            cout << "\nOpcao invalida. Tente novamente.\n";
+        }
+
+    } while (opcao != 3);
+
+    return 0;
+}
