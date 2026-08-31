@@ -1,0 +1,75 @@
+3. Diário de Notas Acadêmicas
+    Contexto: Um professor precisa calcular médias da turma.
+ * Struct: Aluno (matricula, nota1, nota2).
+* Menu:
+  1. Cadastrar aluno e suas duas notas.
+  2. Listar alunos mostrando a matrícula e a média aritmética das duas notas.
+  3. Sair.
+ 
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+const int MAX_ALUNOS = 100;
+
+struct Aluno {
+    int matricula;
+    float nota1;
+    float nota2;
+};
+
+int main() {
+    Aluno turma[MAX_ALUNOS];
+    int totalAlunos = 0;
+    int opcao = 0;
+
+    do {
+        cout << "\n--- DIARIO DE NOTAS ---\n";
+        cout << "1. Cadastrar aluno e notas\n";
+        cout << "2. Listar alunos e medias\n";
+        cout << "3. Sair\n";
+        cout << "Escolha uma opcao: ";
+        cin >> opcao;
+
+        if (opcao == 1) {
+            if (totalAlunos < MAX_ALUNOS) {
+                cout << "\nDigite a matricula do aluno: ";
+                cin >> turma[totalAlunos].matricula;
+
+                cout << "Digite a primeira nota: ";
+                cin >> turma[totalAlunos].nota1;
+
+                cout << "Digite a segunda nota: ";
+                cin >> turma[totalAlunos].nota2;
+
+                totalAlunos = totalAlunos + 1;
+                cout << "Aluno cadastrado com sucesso!\n";
+            } else {
+                cout << "Turma cheia! Nao e possivel cadastrar mais alunos.\n";
+            }
+        } 
+        else if (opcao == 2) {
+            if (totalAlunos == 0) {
+                cout << "\nNenhum aluno cadastrado ate o momento.\n";
+            } else {
+                cout << "\n--- LISTA DE ALUNOS E MEDIAS ---\n";
+                for (int i = 0; i < totalAlunos; i = i + 1) {
+                    float media = (turma[i].nota1 + turma[i].nota2) / 2.0;
+                    cout << "Matricula: " << turma[i].matricula 
+                         << " | Media: " << media << endl;
+                }
+            }
+        } 
+        else if (opcao == 3) {
+            cout << "\nEncerrando o programa...\n";
+        } 
+        else {
+            cout << "\nOpcao invalida. Tente novamente.\n";
+        }
+
+    } while (opcao != 3);
+
+    return 0;
+}
