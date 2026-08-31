@@ -1,0 +1,84 @@
+4. Gerenciador de Biblioteca
+Contexto: Uma biblioteca comunitária quer catalogar seus livros.
+* Struct: Livro (Código, Ano de Publicação, Quantidade Páginas).
+* Menu:
+  1. Cadastrar livro.
+  2. Filtrar livros: Exibir apenas os livros publicados após o ano 2020.
+  3. Sair.
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+const int MAX_LIVROS = 100;
+
+struct Livro {
+    int codigo;
+    int anoPublicacao;
+    int quantidadePaginas;
+};
+
+int main() {
+    Livro acervo[MAX_LIVROS];
+    int totalLivros = 0;
+    int opcao = 0;
+
+    do {
+        cout << "\n--- GERENCIADORr DE BIBLIOTECA ---\n";
+        cout << "1. Cadastrar livro\n";
+        cout << "2. Filtrar livros (Publicados apos 2020)\n";
+        cout << "3. Sair\n";
+        cout << "Escolha uma opcao: ";
+        cin >> opcao;
+
+        if (opcao == 1) {
+            if (totalLivros < MAX_LIVROS) {
+                cout << "\nDigite o codigo do livro: ";
+                cin >> acervo[totalLivros].codigo;
+
+                cout << "Digite o ano de publicacao: ";
+                cin >> acervo[totalLivros].anoPublicacao;
+
+                cout << "Digite a quantidade de paginas: ";
+                cin >> acervo[totalLivros].quantidadePaginas;
+
+                totalLivros = totalLivros + 1;
+                cout << "Livro cadastrado com sucesso!\n";
+            } else {
+                cout << "Acervo cheio! Nao e possivel cadastrar mais livros.\n";
+            }
+        } 
+        else if (opcao == 2) {
+            if (totalLivros == 0) {
+                cout << "\nNenhum livro cadastrAado ate o momento.\n";
+            } else {
+                cout << "\n--- LIVROS PUBLICADOS APOS 2020 ---\n";
+                bool encontrou = false;
+
+                for (int i = 0; i < totalLivros; i = i + 1) {
+                    if (acervo[i].anoPublicacao > 2020) {
+                        cout << "Codigo: " << acervo[i].codigo 
+                             << " | Ano: " << acervo[i].anoPublicacao 
+                             << " | Paginas: " << acervo[i].quantidadePaginas << endl;
+                        encontrou = true;
+                    }
+                }
+
+                if (!encontrou) {
+                    cout << "Nenhum livro publicado apos 2020 foi encontrado.\n";
+                }
+            }
+        } 
+        else if (opcao == 3) {
+            cout << "\nEncerrando o programa...\n";
+        } 
+        else {
+            cout << "\nOpcao invalida. Tente novamente.\n";
+        }
+
+    } while (opcao != 3);
+
+    return 0;
+}
