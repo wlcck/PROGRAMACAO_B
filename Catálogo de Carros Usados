@@ -1,0 +1,88 @@
+5. Catálogo de Carros Usados (Filtro por Valor)
+    Contexto: Uma concessionária quer ajudar clientes a encontrar carros por preço.
+    * Struct: Carro (Código, Ano, Preço).
+    * Menu:
+ 1. Cadastrar carro.
+ 2. Buscar por preço: O usuário digita um valor máximo, e o programa mostra todos os carros mais baratos que esse valor.
+ 3. Sair.
+
+ #include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+const int MAX_CARROS = 100;
+
+struct Carro {
+    int codigo;
+    int ano;
+    float preco;
+};
+
+int main() {
+    Carro catalogo[MAX_CARROS];
+    int totalCarros = 0;
+    int opcao = 0;
+
+    do {
+        cout << "\n--- CATALOGO DE CARROS USADOS ---\n";
+        cout << "1. Cadastrar carro\n";
+        cout << "2. Buscar por preco maximo\n";
+        cout << "3. Sair\n";
+        cout << "Escolha uma opcao: ";
+        cin >> opcao;
+
+        if (opcao == 1) {
+            if (totalCarros < MAX_CARROS) {
+                cout << "\nDigite o codigo do carro: ";
+                cin >> catalogo[totalCarros].codigo;
+
+                cout << "Digite o ano do carro: ";
+                cin >> catalogo[totalCarros].ano;
+
+                cout << "Digite o preco do carro (R$): ";
+                cin >> catalogo[totalCarros].preco;
+
+                totalCarros = totalCarros + 1;
+                cout << "Carro cadastrado com sucesso!\n";
+            } else {
+                cout << "Catalogo cheio! Nao e possivel cadastrar mais carros.\n";
+            }
+        } 
+        else if (opcao == 2) {
+            if (totalCarros == 0) {
+                cout << "\nNenhum carro cadastrado ate o momento.\n";
+            } else {
+                float precoMaximo;
+                cout << "\nDigite o valor maximo desejado (R$): ";
+                cin >> precoMaximo;
+
+                cout << "\n--- CARROS COM PRECO ATE R$ " << precoMaximo << " ---\n";
+                bool encontrou = false;
+
+                for (int i = 0; i < totalCarros; i = i + 1) {
+                    if (catalogo[i].preco <= precoMaximo) {
+                        cout << "Codigo: " << catalogo[i].codigo 
+                             << " | Ano: " << catalogo[i].ano 
+                             << " | Preco: R$ " << catalogo[i].preco << endl;
+                        encontrou = true;
+                    }
+                }
+
+                if (!encontrou) {
+                    cout << "Nenhum carro encontrado ate esse valor.\n";
+                }
+            }
+        } 
+        else if (opcao == 3) {
+            cout << "\nEncerrando o programa...\n";
+        } 
+        else {
+            cout << "\nOpcao invalida. Tente novamente.\n";
+        }
+
+    } while (opcao != 3);
+
+    return 0;
+}
