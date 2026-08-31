@@ -1,0 +1,82 @@
+8. Gestão de Consumo de Energia
+Contexto: Uma empresa de energia quer identificar residências com alto consumo.
+    * Struct: Imóvel (Número da Casa, Consumo kWh).
+    * Menu:
+  1. Cadastrar imóvel.
+  2. Calcular a média de consumo geral da rua.
+  3. Listar imóveis que consomem acima da média calculada.
+  4. Sair.
+
+ #include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+#include "MeusTipos.h"
+int main()
+{
+
+    vector<imovel> casas;
+
+    int opcao;
+    int soma = 0;
+    float media;
+
+    do {
+    
+        cout << "Menu de Opcoes:" << endl;
+        cout << "1. Adicionar imovel" << endl;
+        cout << "2. Calcular media de consumo" << endl;
+        cout << "3. Listar imoveis" << endl;
+        cout << "4. Sair" << endl;
+        cout << "Escolha uma opcao: ";
+        cin >> opcao;
+
+        switch (opcao) {
+            case 1: 
+                imovel imovelTMP;
+                cout << "Digite o numero da casa: ";
+                cin >> imovelTMP.casa;
+                cout << "Digite o consumo em (kwh): ";
+                cin >> imovelTMP.consumo;
+                casas.push_back(imovelTMP);
+                break;
+            
+            case 2: 
+                if (casas.empty()) {
+                    cout << "Nenhum imovel econtrado." << endl;
+                    break;
+                }
+    
+                for (int i = 0; i < casas.size(); i++) {
+                    soma += casas[i].consumo;
+                }
+                media = soma / casas.size();
+                cout << "Media consumo: " << media << endl;
+                break;
+            
+            case 3: 
+                if (casas.empty()) {
+                    cout << "Nenhum imovel cadastrado." << endl;
+                    break;
+                }
+                for (int i = 0; i < casas.size(); i++) {
+                    if (casas[i].consumo > media) {
+                        cout << "Casa: " << casas[i].casa << ", Consumo: " << casas[i].consumo << endl;
+                    }
+                }
+                break;
+            
+            case 4:
+                cout << "Saindo do programa." << endl;
+                break;
+            default:
+                cout << "Opcao invalida. Tente novamente." << endl;
+        }
+
+    } while(opcao != 4);        
+
+    return 1;
+}
+}
