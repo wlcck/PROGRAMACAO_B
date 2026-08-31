@@ -1,0 +1,72 @@
+#include <iostream>  // Inclui comandos de entrada/saida de dados (cin, cout)
+#include <string>    // Permite criar e manipular variaveis de texto (string)
+
+using namespace std; // Evita ter que escrever std:: antes de cout, cin e string
+
+const int MAX_CLIENTES = 100; 
+
+// Define a estrutura (modelo) do Cliente
+struct Cliente {
+    int codigo;      
+    int idade;       
+    string telefone; 
+};
+
+int main() {
+    Cliente lista[MAX_CLIENTES]; 
+    int total = 0;               
+    int opcao = 0;               
+
+    do {
+        // Exibe as opcoes do menu na tela
+        cout << "\n--- MENU DE CLIENTES ---\n";
+        cout << "1. Cadastrar cliente\n";
+        cout << "2. Listar todos os clientes cadastrados\n";
+        cout << "3. Sair\n";
+        cout << "Escolha uma opcao: ";
+        cin >> opcao; 
+
+        if (opcao == 1) { // --- OPCAO 1: CADASTRAR ---
+            if (total < MAX_CLIENTES) { 
+                cout << "\nDigite o codigo do cliente: ";
+                cin >> lista[total].codigo;
+
+                cout << "Digite a idade do cliente: ";
+                cin >> lista[total].idade; 
+
+                cin.ignore();
+
+                cout << "Digite o telefone do cliente: ";
+                getline(cin, lista[total].telefone); 
+                total = total + 1; 
+                cout << "Cliente cadastrado com sucesso!\n";
+            } else {
+                cout << "Limite de clientes atingido!\n"; 
+            }
+        } 
+        else if (opcao == 2) { // --- OPCAO 2: LISTAR ---
+            if (total == 0) {
+                cout << "\nNenhum cliente cadastrado ate o momento.\n"; // Alerta se o vetor estiver vazio
+            } else {
+                cout << "\n--- CLIENTES CADASTRADOS ---\n";
+                // Percorre o vetor do primeiro cliente (0) ate a quantidade cadastrada (total)
+                for (int i = 0; i < total; i = i + 1) {
+                    cout << "Cliente " << (i + 1) << ":\n";
+                    cout << "  Codigo: " << lista[i].codigo << "\n";
+                    cout << "  Idade: " << lista[i].idade << "\n";
+                    cout << "  Telefone: " << lista[i].telefone << "\n";
+                    cout << "---------------------------\n";
+                }
+            }
+        } 
+        else if (opcao == 3) { // --- OPCAO 3: SAIR ---
+            cout << "\nEncerrando o programa...\n";
+        } 
+        else { // --- DIGITOU OPCAO ERRADA ---
+            cout << "\nOpcao invalida. Tente novamente.\n";
+        }
+
+    } while (opcao != 3); // Repete todo o bloco do menu ate a opcao digitada ser 3
+
+    return 0; // Finaliza a funcao main e fecha o programa
+}
